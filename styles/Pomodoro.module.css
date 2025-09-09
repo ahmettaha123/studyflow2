@@ -1,0 +1,655 @@
+.container {
+  min-height: 100vh;
+  padding: 0 2rem;
+  background: var(--background);
+  color: var(--foreground);
+  position: relative;
+  overflow: hidden;
+}
+
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 0;
+  position: relative;
+  z-index: 1;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 4rem;
+  color: var(--primary);
+  letter-spacing: -0.02em;
+  animation: titlePulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes titlePulse {
+  0% {
+    filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.3));
+  }
+  100% {
+    filter: drop-shadow(0 0 20px rgba(237, 100, 166, 0.5));
+  }
+}
+
+.pomodoroContainer {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Ana Zamanlayıcı Kartı */
+.timerCard {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 32px;
+  padding: 4rem 3rem;
+  text-align: center;
+  box-shadow: var(--shadow);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.timerCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--primary);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.timerCard:hover::before {
+  opacity: 0.03;
+}
+
+.timerCard.work {
+  border-color: var(--primary);
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+}
+
+.timerCard.short_break {
+  border-color: var(--success);
+  box-shadow: 0 8px 32px rgba(72, 187, 120, 0.3);
+}
+
+.timerCard.long_break {
+  border-color: var(--warning);
+  box-shadow: 0 8px 32px rgba(237, 137, 54, 0.3);
+}
+
+.sessionTitle {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 3rem;
+  color: var(--foreground);
+  letter-spacing: -0.01em;
+  position: relative;
+}
+
+.sessionTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  width: 60px;
+  height: 4px;
+  background: var(--primary);
+  border-radius: 2px;
+  transform: translateX(-50%);
+}
+
+/* Dairesel Progress Bar */
+.circularProgress {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 2rem;
+}
+
+.progressRing {
+  transform: rotate(-90deg);
+}
+
+.progressRingBackground {
+  opacity: 0.2;
+}
+
+.progressRingForeground {
+  transition: stroke-dashoffset 0.3s ease;
+  stroke-linecap: round;
+}
+
+.timeDisplay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3.5rem;
+  font-weight: 800;
+  font-family: 'Inter', 'Courier New', monospace;
+  color: var(--foreground);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.05em;
+}
+
+/* Kontrol Butonları */
+.controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.controlBtn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 120px;
+}
+
+.startBtn {
+  background: var(--accent-primary);
+  color: white;
+}
+
+.startBtn:hover {
+  background: var(--accent-primary-dark);
+  transform: translateY(-2px);
+}
+
+.pauseBtn {
+  background: var(--warning);
+  color: white;
+}
+
+.pauseBtn:hover {
+  background: #f59e0b;
+  transform: translateY(-2px);
+}
+
+.resetBtn {
+  background: var(--border-color);
+  color: var(--text-primary);
+}
+
+.resetBtn:hover {
+  background: var(--text-secondary);
+  transform: translateY(-2px);
+}
+
+.skipBtn {
+  background: var(--error);
+  color: white;
+}
+
+.skipBtn:hover {
+  background: #dc2626;
+  transform: translateY(-2px);
+}
+
+/* Ders Seçimi Kartı */
+.subjectCard {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.subjectCard h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.subjectSelect {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--background);
+  color: var(--text-primary);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.subjectSelect:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* İstatistikler Kartı */
+.statsCard {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.statsCard h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.statItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.statItem:last-child {
+  border-bottom: none;
+}
+
+.statLabel {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.statValue {
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* Detaylı İstatistikler Kartı */
+.detailedStatsCard {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.statsToggle {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--background);
+  color: var(--text-primary);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.statsToggle:hover {
+  background: var(--border-color);
+  transform: translateY(-1px);
+}
+
+.statsPanel {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.statsPeriods {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.statsPeriod {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.statsPeriod h4 {
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.periodStats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.periodStat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.periodStat:last-child {
+  border-bottom: none;
+}
+
+.periodStat span:first-child {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.periodStat span:last-child {
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.subjectBreakdown {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.subjectBreakdown h5 {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.subjectStat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0;
+  font-size: 0.85rem;
+}
+
+.subjectStat span:first-child {
+  color: var(--text-secondary);
+}
+
+.subjectStat span:last-child {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.motivationSection {
+  background: var(--primary);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  color: white;
+}
+
+.motivationSection h4 {
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.achievements {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.achievement {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  animation: achievementPulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes achievementPulse {
+  0% {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+  }
+}
+
+/* Ayarlar Kartı */
+.settingsCard {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.settingsToggle {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--background);
+  color: var(--text-primary);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.settingsToggle:hover {
+  background: var(--border-color);
+}
+
+.settingsPanel {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.settingItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.settingItem label {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  flex: 1;
+}
+
+.settingInput {
+  width: 80px;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--background);
+  color: var(--text-primary);
+  text-align: center;
+}
+
+.settingInput:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.checkboxItem {
+  margin-bottom: 1rem;
+}
+
+.checkboxItem label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.checkboxItem input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent-primary);
+}
+
+.saveBtn {
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent-primary);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.saveBtn:hover {
+  background: var(--accent-primary-dark);
+  transform: translateY(-1px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+  
+  .title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .timerCard {
+    padding: 2rem 1rem;
+  }
+  
+  .timeDisplay {
+    font-size: 2rem;
+  }
+  
+  .controls {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .controlBtn {
+    width: 100%;
+    max-width: 200px;
+  }
+  
+  .settingItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .settingInput {
+    width: 100%;
+    max-width: 120px;
+  }
+  
+  .statsPeriods {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .statsPeriod {
+    padding: 1rem;
+  }
+  
+  .motivationSection {
+    padding: 1rem;
+  }
+  
+  .achievements {
+    gap: 0.5rem;
+  }
+  
+  .achievement {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .circularProgress {
+    transform: scale(0.8);
+  }
+  
+  .timeDisplay {
+    font-size: 1.8rem;
+  }
+  
+  .stats {
+    gap: 0.5rem;
+  }
+  
+  .statItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+}
+
+/* Dark mode özel ayarları */
+[data-theme="dark"] .progressRingBackground {
+  opacity: 0.3;
+}
+
+[data-theme="dark"] .timerCard {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .timerCard.work {
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.2);
+}
+
+[data-theme="dark"] .timerCard.short_break {
+  box-shadow: 0 4px 20px rgba(34, 197, 94, 0.2);
+}
+
+[data-theme="dark"] .timerCard.long_break {
+  box-shadow: 0 4px 20px rgba(251, 191, 36, 0.2);
+}
