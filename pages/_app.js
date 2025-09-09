@@ -1,30 +1,13 @@
 import '../styles/globals.css';
 import { useState, useEffect, useRef } from 'react';
 import { supabase } from '../lib/supabase';
-import { useRouter } from 'next/router';
 import NavbarNew from '../components/NavbarNew';
 import Footer from '../components/Footer';
 import ParticleSystem from '../components/ParticleSystem';
-import Toast from '../components/Toast';
 import Lenis from 'lenis';
 
 function MyApp({ Component, pageProps }) {
   const lenisRef = useRef(null);
-  const router = useRouter();
-  const [toast, setToast] = useState(null);
-
-  useEffect(() => {
-    // Check for auth success parameter
-    if (router.query.auth === 'success') {
-      setToast({
-        message: 'Giriş başarılı! Hoş geldiniz!',
-        type: 'success'
-      });
-      // Remove the auth parameter from URL
-      const newUrl = router.asPath.split('?')[0];
-      router.replace(newUrl, undefined, { shallow: true });
-    }
-  }, [router.query.auth]);
 
   useEffect(() => {
     // Always use dark theme
@@ -67,13 +50,6 @@ function MyApp({ Component, pageProps }) {
         <Component {...pageProps} />
         <Footer />
       </div>
-      {toast && (
-        <Toast
-          message={toast.message}
-          type={toast.type}
-          onClose={() => setToast(null)}
-        />
-      )}
     </div>
   );
 }

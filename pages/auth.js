@@ -21,16 +21,6 @@ export default function Auth() {
         router.push('/');
       }
     };
-    
-    // Check for error parameter from OAuth callback
-    if (router.query.error) {
-      setMessage(decodeURIComponent(router.query.error));
-      setMessageType('error');
-      // Remove error from URL
-      const newUrl = router.asPath.split('?')[0];
-      router.replace(newUrl, undefined, { shallow: true });
-    }
-    
     checkUser();
   }, [router]);
 
@@ -86,7 +76,7 @@ export default function Auth() {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/api/auth/callback`
+          redirectTo: `${window.location.origin}/`
         }
       });
       if (error) throw error;
