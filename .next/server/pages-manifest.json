@@ -3,6 +3,6 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
-  "/auth": "pages/auth.js",
-  "/hedefler": "pages/hedefler.js"
+  "/hedefler": "pages/hedefler.js",
+  "/auth": "pages/auth.js"
 }

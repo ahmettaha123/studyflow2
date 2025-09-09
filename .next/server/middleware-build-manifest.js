@@ -24,15 +24,10 @@ self.__BUILD_MANIFEST = {
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/deneme-takip": [
+    "/auth": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/deneme-takip.js"
-    ],
-    "/hedefler": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/hedefler.js"
+      "static/chunks/pages/auth.js"
     ]
   },
   "ampFirstPages": []

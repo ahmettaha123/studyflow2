@@ -21,6 +21,16 @@ export default function Auth() {
         router.push('/');
       }
     };
+    
+    // OAuth error handling
+    const { error } = router.query;
+    if (error) {
+      setMessage(decodeURIComponent(error));
+      setMessageType('error');
+      // URL'den error parametresini temizle
+      router.replace('/auth', undefined, { shallow: true });
+    }
+    
     checkUser();
   }, [router]);
 
@@ -73,10 +83,18 @@ export default function Auth() {
 
   const handleGoogleAuth = async () => {
     try {
+      // Callback URL'ini oluştur
+      const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 
+        (process.env.NODE_ENV === 'production' 
+          ? 'https://studyflowers.netlify.app' 
+          : window.location.origin);
+      
+      const redirectUrl = `${baseUrl}/api/auth/callback`;
+      
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/`
+          redirectTo: redirectUrl
         }
       });
       if (error) throw error;
